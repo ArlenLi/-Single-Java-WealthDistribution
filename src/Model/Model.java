@@ -298,6 +298,23 @@ public class Model {
         return classCount;
     }
 
+	// calculate the gini index
+	public double getGiniIndex() {
+		int wealthTotal = 0;
+		int wealthSumSoFar = 0;
+		double giniIndex = 0;
+		for (int i = 0; i < people.length; i++) {
+			wealthTotal += people[i].getWealth();
+		}
+		int i = 0;
+		while(i < people.length) {
+			wealthSumSoFar += people[i].getWealth();
+			i++;
+			giniIndex = giniIndex + (((double)i/peopleNum) - ((double)wealthSumSoFar/wealthTotal))*0.01;
+		}
+		return giniIndex;
+	}
+
 
 	
 	
@@ -354,11 +371,13 @@ public class Model {
                     }
                 }
             }
-        }
-        model.sortPeople(); // sort people by wealth
-        int[] classCount = model.peopleClassCount();
-        for (int i = 0; i < classCount.length; i++) {
-            System.out.println(classCount[i]);
+			model.sortPeople(); // sort people by wealth
+			int[] classCount = model.peopleClassCount();
+			for (int i = 0; i < classCount.length; i++) {
+				System.out.print(classCount[i] + " ");
+			}
+			System.out.println(model.getGiniIndex());
+			model.getGiniIndex();
         }
 	}
 }
